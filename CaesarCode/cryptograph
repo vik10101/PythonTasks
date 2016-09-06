@@ -1,0 +1,44 @@
+# The Caesar Code is simple. You have an integer offset passed and you have to shift the alphabet letters and create
+# a message with the letter at the corresponding index so the message you send can be reassembled by shifting the
+# alphabet by the same offset. If the offset passed is greater than the number of letters, you have to start from
+# the begining of the alphabet. You should not change any other symbols such as digits, dashes etc.
+
+def caesar_code(text, key):
+
+    result = ""
+
+    alphabet = ['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z']
+
+    # I am creating a dictionary with the corresponding values.
+    code = {}
+
+    for i in range(0, 26):
+        k = (i+key) % 26
+        code[alphabet[i]] = alphabet[k]
+
+    for char in text:
+
+        # I append the character to "result" string using get command that have default value of the character we are
+        # reading in case that character is not in our dictionary.
+        result += str(code.get(char, char))
+
+    # If we have no result we have to return "INVALID INPUT" as the result.
+    if result == '':
+        return "INVALID INPUT"
+
+    return result
+
+def main():
+
+    # Here we catch possible exceptions, such as entering string instead of number.
+    try:
+        key = int(input("Enter an offset:"))
+        key = key % 26
+        text = input("Enter your message here:")
+        result = caesar_code(text, key)
+        print(result)
+    except Exception:
+        print("INVALID INPUT")
+
+if __name__ == "__main__":
+    main()
